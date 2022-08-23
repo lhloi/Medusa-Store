@@ -1,0 +1,8 @@
+.select2-selection__choice{
+    background-color: black !important ;
+}
+.select2-search__field {
+    border: 0 !important;
+    height: 24px !important;
+
+}
