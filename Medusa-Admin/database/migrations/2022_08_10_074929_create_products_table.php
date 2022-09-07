@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('content');
             $table->integer('user_id');
             $table->integer('category_id');
+            $table->integer('brand_id');
 
             $table->timestamps();
         });

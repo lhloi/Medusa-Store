@@ -23,4 +23,8 @@ class products extends Model
     {
         return $this->belongsToMany(tags::class, 'product_tags', 'product_id', 'tag_id');
     }
+    public function stock(Type $var = null)
+    {
+        return $this->hasMany(product_stock::class,'product_id');
+    }
 }

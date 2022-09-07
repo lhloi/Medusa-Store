@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('Client.Pages.Home.home');
-});
+Route::get('/', [HomeController::class,'home']);
+Route::get('/danh-sach-san-pham',[CategoryController::class,'index']);
+Route::get('/danh-muc/{slug}',[CategoryController::class,'getProductByCategory']);
+Route::get('/thong-tin-san-pham/{slug}',[ProductController::class,'viewProductDetail']);
+

@@ -84,6 +84,7 @@
     <script src="{{ asset('ashion-master/js/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('ashion-master/js/main.js') }}"></script>
     <script src="{{ asset('ashion-master/js/bootstrap.bundle.min.js') }}"></script>
+    @yield('js')
 </body>
 
 </html>

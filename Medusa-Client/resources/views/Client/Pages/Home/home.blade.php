@@ -9,6 +9,9 @@
 @section('js')
 
 @endsection
+@php
+ $baseUrl = config('app.base_url');
+@endphp
 @section('content')
 
     <!-- Banner Section Begin -->

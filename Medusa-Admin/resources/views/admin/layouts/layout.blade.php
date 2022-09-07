@@ -57,12 +57,14 @@
 
     {{-- <script src="https://cdn.tiny.cloud/1/rxwbm1mdm7f5h5m0rrg5zvgc8kmiffkyt2hpx3jts4hc59lo/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> --}}
     <script src="{{ asset('AdminBE/Layout/tinymce.min.js') }}"></script>
-
+    {{-- <script src="//cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script> --}}
     {{-- slug title --}}
     <script src="{{ asset('AdminBE/Layout/layout.js') }}"></script>
 
     @yield('js')
-
+    {{-- <script>
+       CKEDITOR.replace('editor');
+    </script> --}}
 </body>
 
 </html>

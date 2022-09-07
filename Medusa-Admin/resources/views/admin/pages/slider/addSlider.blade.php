@@ -54,7 +54,7 @@
 
                                 <div class="form-group">
                                     <label for="description">Mô Tả</label>
-                                    <textarea class="form-control tinymce_edit_init @error('description') is-invalid @enderror"
+                                    <textarea class="form-control  @error('description') is-invalid @enderror"
                                         name="description" rows="10">{{ old('description') }}</textarea>
                                         @error('description')
                                             <div class="text-danger">{{ $message }}</div>
@@ -63,8 +63,8 @@
                                 <div class="form-group">
                                     <label for="description">Trạng Thái</label>
                                     <select class="form-control" name="status" aria-label="Default select example">
-                                        <option value="0" selected>Hiện</option>
-                                        <option value="1">Ẩn</option>
+                                        <option value="1" selected>Hiện</option>
+                                        <option value="0">Ẩn</option>
                                       </select>
                                 </div>
 

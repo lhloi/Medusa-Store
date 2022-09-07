@@ -29,7 +29,7 @@
                                         <option value="0" selected>Chọn menu cha</option>
                                         @foreach ($menu as $key=>$data)
                                             @if ($data->parent_id == 0)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                <option value="{{ $data->id }}"> - {{ $data->name }}</option>
 
                                                 {{-- @foreach ($cate as $key=>$parent)
                                                     @if ($data->id == $parent->parent_id)

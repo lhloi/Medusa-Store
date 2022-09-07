@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\AdminPermissionController;
+use App\Http\Controllers\BrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,13 @@ Route::group(['prefix'=>'admin','middleware'=>['auth']],function(){
         Route::post('/update-category/{id}', [CategoryController::class,'updateCategory'])->middleware('can:edit-category');
         Route::get('/delete-category/{id}', [CategoryController::class,'deleteCategory'])->middleware('can:delete-category');
     });
+    Route::group(['prefix'=>'brand'],function(){
+        Route::get('/', [BrandController::class,'listBrand'])->middleware('can:list-category');
+        Route::post('/save-brand', [BrandController::class,'saveBrand'])->middleware('can:add-category');
+        Route::get('/edit-brand/{id}', [BrandController::class,'editBrand'])->middleware('can:edit-category');
+        Route::get('/update-brand/{id}', [BrandController::class,'updateBrand'])->middleware('can:edit-category');
+        Route::get('/delete-brand/{id}', [BrandController::class,'deleteBrand'])->middleware('can:delete-category');
+    });
     Route::group(['prefix'=>'menu'],function(){
         Route::get('/', [MenuController::class,'listMenu'])->middleware('can:list-menu');
         Route::get('/add-menu', [MenuController::class,'addMenu'])->middleware('can:add-menu');
@@ -61,6 +69,15 @@ Route::group(['prefix'=>'admin','middleware'=>['auth']],function(){
         Route::get('/edit-product/{id}', [ProductController::class,'editProduct'])->middleware('can:edit-product,id');
         Route::post('/update-product/{id}', [ProductController::class,'updateProduct'])->middleware('can:edit-product,id');
         Route::get('/delete-product/{id}', [ProductController::class,'deleteProduct'])->middleware('can:delete-product,id');
+        // setting=====================================
+        Route::get('/product-color', [ProductController::class,'listProductColor']);
+        Route::post('/save-product-color', [ProductController::class,'saveProductColor']);
+        Route::get('/delete-product-color/{id}', [ProductController::class,'deleteProductColor']);
+        // Size
+        Route::get('/product-size', [ProductController::class,'listProductSize']);
+        Route::post('/save-product-size', [ProductController::class,'saveProductSize']);
+        Route::get('/delete-product-size/{id}', [ProductController::class,'deleteProductSize']);
+
     });
     Route::group(['prefix'=>'slider'],function(){
         Route::get('/', [SliderController::class,'listSlider'])->middleware('can:list-slider');
@@ -96,6 +113,6 @@ Route::group(['prefix'=>'admin','middleware'=>['auth']],function(){
     });
 });
 
-// Route::group(['prefix' => 'laravel-filemanager'], function () {
-//     \UniSharp\LaravelFilemanager\Lfm::routes();
-// });
+Route::group(['prefix' => 'laravel-filemanager'], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});

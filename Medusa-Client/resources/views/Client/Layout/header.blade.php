@@ -3,17 +3,17 @@
         <div class="row">
             <div class="col-xl-3 col-lg-2">
                 <div class="header__logo">
-                    <a href="./index.html"><img src="ashion-master/img/logo.png" alt=""></a>
+                    <a href="{{ Url('/') }}"><img src="{{ asset('ashion-master/img/logo.png') }}" alt=""></a>
                 </div>
             </div>
             <div class="col-xl-6 col-lg-7">
                 <nav class="header__menu">
                     <ul>
-                        <li class="active"><a href="./index.html">Home</a></li>
+                        <li class="active"><a href="{{ Url('/') }}">Home</a></li>
                         <li><a href="#">Women’s</a></li>
                         <li><a href="#">Men’s</a></li>
-                        <li><a href="./shop.html">Shop</a></li>
-                        <li><a href="#">Pages</a>
+                        <li><a href="{{ Url('danh-sach-san-pham') }}">Shop</a></li>
+                        {{-- <li><a href="#">Pages</a>
                             <ul class="dropdown">
                                 <li><a href="./product-details.html">Product Details</a></li>
                                 <li><a href="./shop-cart.html">Shop Cart</a></li>
@@ -22,7 +22,7 @@
                             </ul>
                         </li>
                         <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="./contact.html">Contact</a></li>
+                        <li><a href="./contact.html">Contact</a></li> --}}
                     </ul>
                 </nav>
             </div>

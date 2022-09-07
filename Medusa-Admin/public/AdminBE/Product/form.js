@@ -9,6 +9,7 @@ $(".select2_init").select2({
 let editor_config = {
     path_absolute : "/",
     selector: 'textarea.tinymce_edit_init',
+    convert_urls : false,
     relative_urls: false,
     plugins: [
     "advlist autolink lists link image charmap print preview hr anchor pagebreak",

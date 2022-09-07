@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function listCategory()
     {
-        $cate = Category::orderBy('id','desc')->paginate(5);
+        $cate = Category::orderBy('id','desc')->paginate(10);
         return view('admin.pages.category.listCategory',compact('cate'));
     }
     public function addCategory()

@@ -40,15 +40,15 @@
 
                                 <div class="form-group">
                                     <label for="description">Mô Tả</label>
-                                    <textarea class="form-control tinymce_edit_init " name="description"
+                                    <textarea class="form-control " name="description"
                                         rows="10">{{ $slider->description }}</textarea>
 
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group ">
                                     <label for="description">Trạng Thái</label>
                                     <select class="form-control" name="status" aria-label="Default select example">
-                                        <option value="0" {{ $slider->status == '0'? 'selected': '' }}>Hiện</option>
-                                        <option value="1" {{ $slider->status == '1'? 'selected': '' }}>Ẩn</option>
+                                        <option value="1" {{ $slider->status == '1'? 'selected': '' }}>Hiện</option>
+                                        <option value="0" {{ $slider->status == '0'? 'selected': '' }}>Ẩn</option>
                                     </select>
                                 </div>
 

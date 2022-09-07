@@ -23,6 +23,7 @@
                                         <th scope="col">Tên Slider</th>
                                         <th scope="col">Hình Ảnh</th>
                                         <th scope="col">Mô tả</th>
+                                        <th scope="col">Trạng Thái</th>
                                         <th scope="col">Add New
                                             @can('add-slider')
                                             <a href="{{ Url('admin/slider/add-slider') }}"
@@ -43,6 +44,14 @@
                                                 <img src="{{ $data->image_path }}" alt="Hình ảnh chính" width="150px">
                                             </td>
                                             <td>{{ $data->description }}</td>
+                                            <td>
+                                                @if ($data->status== 0)
+                                                    Ẩn
+                                                @elseif($data->status= 1)
+                                                    Hiện
+                                                @endif
+
+                                            </td>
 
                                             <td>
                                                 @can('edit-slider')

@@ -7,10 +7,15 @@ use \App\Http\Requests\ProductAddRequest;
 use App\Models\Products;
 use App\Models\Product_Images;
 use App\Models\Category;
+use App\Models\Brand;
 use App\Models\Tags;
 use App\Models\Product_Tags;
+use App\Models\Product_color;
+use App\Models\product_stock;
+use App\Models\Product_size;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Log;
+use Redirect;
 use DB;
 
 class ProductController extends Controller
@@ -28,12 +33,14 @@ class ProductController extends Controller
     public function addProduct()
     {
         $cate = Category::all();
+        $brand = Brand::all();
         $tags = Tags::all();
-        // print( $tags );
-        return view('admin.pages.product.addProduct',compact('cate','tags'));
+        $color = Product_color::all();
+        $size = Product_size::all();
+        return view('admin.pages.product.addProduct',compact('cate','tags','color','size','brand'));
     }
 
-    public function saveProduct(ProductAddRequest $request)
+    public function saveProduct(Request $request)
     {
         try {
             DB::beginTransaction();
@@ -43,6 +50,7 @@ class ProductController extends Controller
             $product->price = $request->price;
             $product->content = $request->content;
             $product->category_id = $request->category_id;
+            $product->brand_id = $request->brand_id;
             $product->user_id =auth()->user()->id;
             $dataImageProduct = $this->storageTraitUpload( $request,'feature_image_path','product' );
             if(!empty($dataImageProduct)){
@@ -69,8 +77,17 @@ class ProductController extends Controller
                     // ]);
                     $tagId[] = $tag->id;
                 }
+                $product->tags()->attach($tagId);
             }
-            $product->tags()->attach($tagId);
+            foreach ($request->color as $key => $value) {
+                $stock = new product_stock();
+                $stock->product_id = $product->id;
+                $stock->color_id = $value;
+                $stock->size_id = $request->size[$key];
+                $stock->quantity = $request->quantity[$key];
+                $stock->save();
+            }
+
 
             DB::commit();
             return redirect('admin/product/')->with('message','Thêm sản phẩm thành công');
@@ -85,7 +102,11 @@ class ProductController extends Controller
     {
         $product = Products::find($id);
         $cate = Category::all();
+        $brand = Brand::all();
+        $color = Product_color::all();
+        $size = Product_size::all();
         $img_path = product_images::where('product_id',$product->id)->get();
+        $stock = product_stock::where('product_id',$product->id)->get();
         // $product_tags = product_tags::where('product_id',$product->id)->get();
         $tags = tags::all();
         $tagsOfProduct = $product->tags;
@@ -94,7 +115,7 @@ class ProductController extends Controller
         // ->select('tags.*')
         // ->get();
         // print($tags);
-        return view('admin.pages.product.editProduct',compact('product','cate','img_path','tags','tagsOfProduct'));
+        return view('admin.pages.product.editProduct',compact('product','cate','img_path','tags','tagsOfProduct','color','size','stock','brand'));
     }
 
     public function updateProduct(Request $request , $id)
@@ -107,8 +128,10 @@ class ProductController extends Controller
             $product->slug = $request->slug;
             $product->price = $request->price;
             $product->content = $request->content;
+            // $product->content = str_replace('<img src="','<img src="http://127.0.0.1:8081',$request->content);
             $product->category_id = $request->category_id;
-            $product->user_id =auth()->user()->id;
+            $product->brand_id = $request->brand_id;
+            $product->user_id = auth()->user()->id;
             $dataImageProduct = $this->storageTraitUpload( $request,'feature_image_path','product' );
             if(!empty($dataImageProduct)){
                 if (!empty($product->feature_image_path)){
@@ -145,8 +168,22 @@ class ProductController extends Controller
                     // ]);
                     $tagId[] = $tag->id;
                 }
+                $product->tags()->sync($tagId);
             }
-            $product->tags()->sync($tagId);
+            $stock = product_stock::where('product_id',$product->id)->get();
+            if ($stock->count()>'0') {
+                product_stock::where('product_id',$product->id)->delete();
+            }
+            foreach ($request->color as $key => $value) {
+                $stock = new product_stock();
+                $stock->product_id = $product->id;
+                $stock->color_id = $value;
+                $stock->size_id = $request->size[$key];
+                $stock->quantity = $request->quantity[$key];
+                $stock->save();
+            }
+
+
             DB::commit();
             return redirect('admin/product/')->with('message','Cập nhâp danh mục thành công');
         } catch (\Exception $exception) {
@@ -191,5 +228,95 @@ class ProductController extends Controller
 
         // Product::find($id)->delete();
         // return redirect()->back()->with('message','Xóa danh mục thành công');
+    }
+
+    // =============================  Color  =====================================
+    public function listProductColor()
+    {
+        $color = product_color::orderBy('name', 'desc')->paginate(10);
+        return view('admin.pages.productColor.listProductColor',compact('color'));
+    }
+
+    public function saveProductColor(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|unique:product_color|max:255',
+            'code_color' => 'required',
+        ]);
+        $color = new product_color();
+        $color->name = $request->name;
+        $color->slug = $request->slug;
+        $color->description = $request->description;
+        $color->code_color = $request->code_color;
+        $color->save();
+        return Redirect::back()->with('message','Thêm màu thành công');
+
+    }
+    public function deleteProductColor($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            product_stock::where('color_id',$id)->delete();
+            product_color::find($id)->delete();
+            DB::commit();
+            return response()->json([
+                'code' => 200,
+                'message' => 'success'
+            ],200);
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error("message:".$exception->getMessage().' Line :'.$exception->getLine());
+            return response()->json([
+                'code' => 500,
+                'message' => 'fail'
+            ],500);
+        }
+
+        // Product::find($id)->delete();
+        // return redirect()->back()->with('message','Xóa danh mục thành công');
+    }
+
+    // =============================  Size  ======================================
+    public function listProductSize()
+    {
+        $size = product_size::all();
+        return view('admin.pages.productSize.listProductSize',compact('size'));
+    }
+
+    public function saveProductSize(Request $request)
+    {
+
+        $request->validate([
+            'name' => 'required|unique:product_size|max:255',
+            'slug' => 'required',
+        ]);
+        $size = new product_size();
+        $size->name = $request->name;
+        $size->slug = $request->slug;
+        $size->description = $request->description;
+        $size->save();
+        return Redirect::back()->with('message','Thêm Size thành công');
+
+    }
+    public function deleteProductSize($id)
+    {
+        try {
+            product_size::find($id)->delete();
+            return response()->json([
+                'code' => 200,
+                'message' => 'success'
+            ],200);
+
+        } catch (\Exception $exception) {
+            Log::error("message:".$exception->getMessage().' Line :'.$exception->getLine());
+            return response()->json([
+                'code' => 500,
+                'message' => 'fail'
+            ],500);
+        }
+
+
     }
 }

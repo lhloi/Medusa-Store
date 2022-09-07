@@ -39,26 +39,30 @@
                                     @foreach ($product as $key => $data)
                                         <tr>
                                             <th scope="row">{{ $data->id }}</th>
-                                            <td>{{ $data->name }}</td>
+                                            <td class="col-5">{{ $data->name }}</td>
                                             <td>{{ number_format($data->price ) }}đ</td>
                                             <td>
                                                 <img src="{{ $data->feature_image_path }}" alt="Hình ảnh chính" width="150px">
                                             </td>
                                             <td>{{ $data->catename }}</td>
 
-                                            <td>
+                                            <td class="project-actions">
+                                                <a class="btn btn-primary btn-sm" href="#">
+                                                    <i class="fas fa-folder"></i>
+
+                                                </a>
                                                 @can('edit-product',$data->id)
-                                                <a href="{{ Url('admin/product/edit-product/'.$data->id) }}" type="button"
-                                                    class="btn btn-warning">
-                                                        Edit
+                                                <a class="btn btn-info btn-sm" href="{{ Url('admin/product/edit-product/'.$data->id) }}">
+                                                    <i class="fas fa-pencil-alt"></i>
+
                                                 </a>
                                                 @endcan
 
                                                 @can('delete-product',$data->id)
-                                                    <a data-url="{{ Url('admin/product/delete-product/'.$data->id) }}"
-                                                    class="btn btn-danger action_Delete">
-                                                        Delete
-                                                    </a>
+                                                <a class="btn btn-danger btn-sm action_Delete" data-url="{{ Url('admin/product/delete-product/'.$data->id) }}">
+                                                    <i class="fas fa-trash"></i>
+
+                                                </a>
                                                 @endcan
 
                                             </td>
