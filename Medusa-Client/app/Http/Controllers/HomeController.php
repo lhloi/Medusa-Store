@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\Slider;
 use App\Models\Category;
 use App\Models\Products;
 
+use Illuminate\Http\Request;
+
 class HomeController extends Controller
 {
+
     public function home()
     {
         $slider = Slider::where('status','1')->orderBy('created_at','desc')->get();
@@ -16,5 +17,4 @@ class HomeController extends Controller
         $product = Products::orderBy('created_at','desc')->take(8)->get();
         return view('Client.Pages.Home.home',compact('slider','category','product'));
     }
-
 }

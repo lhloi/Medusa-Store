@@ -3,8 +3,7 @@
     <title>Home Medusa</title>
 @endsection
 @section('css')
-<link rel="stylesheet" href="{{ asset('client/home/home.css') }}" type="text/css">
-<link rel="stylesheet" href="{{ asset('client/home/banner.css') }}" type="text/css">
+
 @endsection
 @php
  $baseUrl = config('app.base_url');
@@ -54,7 +53,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <form action="{{ Url('cart/save-cart') }}" method="POST" class="col-lg-6">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $productDetail->id }}">
                 <div class="product__details__text">
                     <h3>{{ $productDetail->name }} <span>Brand: {{ count($productDetail->brand)>0 ? $productDetail->brand->first()->name : 'Null' }}</span></h3>
                     {{-- <h3>Essential structured blazer </h3> --}}
@@ -89,7 +90,7 @@
                                     @foreach ($productDetail->stock->unique('color_id') as $item)
                                         @foreach ($item->color as $data)
                                             <label for="{{ $data->slug }}">
-                                                <input type="radio" name="color__radio" id="{{ $data->slug }}">
+                                                <input type="radio" name="color" id="{{ $data->slug }}" value="{{ $data->id }}">
                                                 <span class="checkmark" style="background: #{{ $data->code_color }};border-style: ridge;" ></span>
                                             </label>
                                         @endforeach
@@ -105,7 +106,7 @@
                                         {{-- @if ($item->color_id =='1') --}}
                                             @foreach ($item->size as $data)
                                                 <label for="{{ $data->id }}" >
-                                                    <input type="radio" id="{{ $data->id }}">
+                                                    <input type="radio" name="size" id="{{ $data->id }}" value="{{ $data->id }}">
                                                     {{  $data->name }}
                                                 </label>
                                             @endforeach
@@ -125,16 +126,21 @@
                         <div class="quantity">
                             <span>Quantity:</span>
                             <div class="pro-qty">
-                                <input type="text" value="1">
+                                <span class="dec qtybtn">-</span>
+                                <input type="text" name="quantity" value="1">
+                                <span class="inc qtybtn">+</span>
+
                             </div>
                         </div>
-                        <a href="#" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</a>
+                        <button type="submit" class="cart-btn" style="border:0"><span class="icon_bag_alt"></span> Add to cart</button>
                         <ul>
                             <li><a href="#"><span class="icon_heart_alt"></span></a></li>
                         </ul>
                     </div>
                 </div>
-            </div>
+            </form>
+
+
             <div class="col-lg-12">
                 <div class="product__details__tab">
                     <ul class="nav nav-tabs" role="tablist">

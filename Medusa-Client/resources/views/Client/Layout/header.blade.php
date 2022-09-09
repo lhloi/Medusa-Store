@@ -28,16 +28,54 @@
             </div>
             <div class="col-lg-3">
                 <div class="header__right">
-                    <div class="header__right__auth">
+                    {{-- <div class="header__right__auth">
                         <a href="#">Login</a>
                         <a href="#">Register</a>
-                    </div>
+                    </div> --}}
+                    @guest
+                            <div class="header__right__auth">
+                                @if (Route::has('login'))
+                                    <a  href="{{ route('login') }}">Login</a>
+                                @endif
+                                @if (Route::has('register'))
+                                    <a  href="{{ route('register') }}">Register</a>
+                                @endif
+                            </div>
+                            {{-- @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @endif
+
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif --}}
+                        @else
+                            <li class="header__right__auth">
+                                <a role="button" data-bs-toggle="dropdown">
+                                    {{ Auth::user()->name }}
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
                     <ul class="header__right__widget">
                         <li><span class="icon_search search-switch"></span></li>
                         <li><a href="#"><span class="icon_heart_alt"></span>
                             <div class="tip">2</div>
                         </a></li>
-                        <li><a href="#"><span class="icon_bag_alt"></span>
+                        <li><a href="{{ Url('cart/show-cart') }}"><span class="icon_bag_alt"></span>
                             <div class="tip">2</div>
                         </a></li>
                     </ul>

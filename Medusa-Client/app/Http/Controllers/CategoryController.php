@@ -11,14 +11,14 @@ class CategoryController extends Controller
     public function index()
     {
         $categorys = Category::where('parent_id','0')->orderBy('created_at','asc')->get();
-        $products= Products::paginate(9);
+        $products= Products::orderBy('created_at','desc')->paginate(9);
         return view('Client.Pages.Shop.shop',compact('products','categorys'));
     }
     public function getProductByCategory($slug)
     {
         $categorys = Category::where('parent_id','0')->orderBy('created_at','asc')->get();
         $slug = Category::where('slug',$slug)->first();
-        $product = Products::where('category_id',$slug->id)->paginate(9);
+        $product = Products::where('category_id',$slug->id)->orderBy('created_at','asc')->paginate(9);
 
         // print_r($product);
         return view('Client.Pages.Shop.shopByCategory',compact('product','categorys','slug'));

@@ -3,7 +3,6 @@
     <title>Home Medusa</title>
 @endsection
 @section('css')
-<link rel="stylesheet" href="client/home/home.css" type="text/css">
 <link rel="stylesheet" href="client/home/banner.css" type="text/css">
 @endsection
 @section('js')

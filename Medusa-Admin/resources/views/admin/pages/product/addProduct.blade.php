@@ -106,7 +106,7 @@
                                     <option value="" selected>Chọn Danh Mục</option>
                                     @foreach ($cate as $key => $data)
                                         @if ($data->parent_id == 0)
-                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            <option  value="{{ $data->id }}" disabled>{{ $data->name }}</option>
                                             @foreach ($cate as $key => $parent)
                                                 @if ($data->id == $parent->parent_id)
                                                     <option value="{{ $parent->id }}">
