@@ -41,15 +41,8 @@
               <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                   data-accordion="false">
 
-                  {{-- <li class="nav-item">
-                      <a href="{{ Url('admin/category') }}" class="nav-link">
-                          <i class="nav-icon fas fa-th"></i>
-                          <p>
-                              Danh muc
-                              {{-- <span class="right badge badge-danger">New</span> --}}
-                          </p>
-                      </a>
-                  </li> --}}
+
+
                   <li class="nav-item">
                       <a href="{{ Url('admin/menu') }}" class="nav-link">
                           <i class="nav-icon fas fa-th"></i>
@@ -104,6 +97,12 @@
 
                       </ul>
                   </li>
+                  <li class="nav-item">
+                    <a href="{{ Url('admin/order') }}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>Order</p>
+                    </a>
+                </li>
                   <li class="nav-item">
                       <a href="{{ Url('admin/slider') }}" class="nav-link">
                           <i class="nav-icon fas fa-th"></i>

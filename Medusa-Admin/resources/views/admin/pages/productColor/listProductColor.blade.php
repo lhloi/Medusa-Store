@@ -68,8 +68,8 @@
                                     <tr>
                                         <th scope="col">Tên Màu</th>
                                         <th scope="col">Mã màu</th>
-                                        <th scope="col">Mô Tả</th>
                                         <th scope="col">Slug</th>
+                                        <th scope="col">Mô Tả</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>

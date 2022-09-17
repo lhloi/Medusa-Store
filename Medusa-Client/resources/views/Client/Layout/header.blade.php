@@ -35,10 +35,10 @@
                     @guest
                             <div class="header__right__auth">
                                 @if (Route::has('login'))
-                                    <a  href="{{ route('login') }}">Login</a>
+                                    <a  href="{{ route('login') }}">Đăng nhập</a>
                                 @endif
                                 @if (Route::has('register'))
-                                    <a  href="{{ route('register') }}">Register</a>
+                                    <a  href="{{ route('register') }}">Đăng ký</a>
                                 @endif
                             </div>
                             {{-- @if (Route::has('login'))
@@ -59,9 +59,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ Url('user/profile') }}">Tài khoản của tôi</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Đăng xuất') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

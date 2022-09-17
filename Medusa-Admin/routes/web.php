@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\AdminPermissionController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +80,12 @@ Route::group(['prefix'=>'admin','middleware'=>['auth']],function(){
         Route::get('/delete-product-size/{id}', [ProductController::class,'deleteProductSize']);
 
     });
+    Route::group(['prefix'=>'order'],function(){
+        Route::get('/', [OrderController::class,'listOrder']);
+        Route::get('/view-order/{id}', [OrderController::class,'viewOrder']);
+        Route::post('/update-status/{id}', [OrderController::class,'updateOrderStatus']);
+
+    });
     Route::group(['prefix'=>'slider'],function(){
         Route::get('/', [SliderController::class,'listSlider'])->middleware('can:list-slider');
         Route::get('/add-slider', [SliderController::class,'addSlider'])->middleware('can:add-slider');
@@ -95,6 +102,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth']],function(){
         Route::post('/update-user/{id}', [AdminUserController::class,'updateUser'])->middleware('can:edit-user');
         Route::get('/delete-user/{id}', [AdminUserController::class,'deleteUser'])->middleware('can:delete-user');
     });
+
     Route::group(['prefix'=>'role'],function(){
         Route::get('/', [AdminRoleController::class,'listRole'])->middleware('can:list-role');
         Route::get('/add-role', [AdminRoleController::class,'addRole'])->middleware('can:add-role');

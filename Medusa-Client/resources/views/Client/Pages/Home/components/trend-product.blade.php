@@ -1,3 +1,6 @@
+@php
+$baseUrl = config('app.base_url');
+@endphp
 <section class="trend spad">
     <div class="container">
         <div class="row">
@@ -116,23 +119,29 @@
                     <div class="section-title">
                         <h4>Feature</h4>
                     </div>
-                    <div class="trend__item">
-                        <div class="trend__item__pic">
-                            <img src="ashion-master/img/trend/f-1.jpg" alt="">
-                        </div>
-                        <div class="trend__item__text">
-                            <h6>Bow wrap skirt</h6>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
+                    @if (isset($feature))
+                        @foreach ($feature as $item)
+                        <div class="trend__item">
+                            <div class="trend__item__pic">
+                                <img src="{{ $baseUrl.$item->feature_image_path }}" width="90px" height="90px" alt="">
                             </div>
-                            <div class="product__price">$ 59.0</div>
+                            <div class="trend__item__text">
+                                <h6>{{ $item->name }}</h6>
+                                {{-- <div class="rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div> --}}
+                                <div class="product__price">{{ number_format($item->price,0,",",".") }}vnd</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="trend__item">
+                        @endforeach
+
+                    @endif
+
+                    {{-- <div class="trend__item">
                         <div class="trend__item__pic">
                             <img src="ashion-master/img/trend/f-2.jpg" alt="">
                         </div>
@@ -163,7 +172,7 @@
                             </div>
                             <div class="product__price">$ 59.0</div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

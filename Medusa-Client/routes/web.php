@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,10 +34,23 @@ Route::group(['prefix'=>'cart','middleware'=>['auth']],function(){
     Route::get('/dec-quantity/{id}',[CartController::class,'decQuantityCart']);
     Route::get('/inc-quantity/{id}',[CartController::class,'incQuantityCart']);
 });
-Route::group(['prefix'=>'checkout','middleware'=>['auth']],function(){
-    Route::get('/',[CartController::class,'viewCheckOut']);
+Route::get('/checkout',[CartController::class,'viewCheckOut'])->middleware('auth');
+
+Route::group(['prefix'=>'order','middleware'=>['auth']],function(){
+    Route::post('/place',[CartController::class,'orderPlace']);
+
 
 });
 
+Route::group(['prefix'=>'user','middleware'=>['auth']],function(){
+    Route::get('profile',[UserController::class,'Profile']);
+    Route::post('save-profile',[UserController::class,'saveProfile']);
+    Route::get('address',[UserController::class,'Address']);
+    Route::post('save-address',[UserController::class,'saveAddress']);
+    Route::get('default-address/{id}',[UserController::class,'defaultAddress']);
+    Route::get('delete-address/{id}',[UserController::class,'deleteAddress']);
+    Route::get('/purchase',[UserController::class,'viewOrder']);
+    Route::get('/purchase-destroy/{id}',[UserController::class,'destroyOrder']);
+});
 
 

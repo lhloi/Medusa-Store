@@ -34,9 +34,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $sum = 0;
-                                @endphp
                                 @foreach ($cart_item as $item)
                                 <tr>
                                     <td class="cart__product__item">
@@ -46,7 +43,6 @@
                                             <div class="rating">
                                                 <p>Màu:{{ $item->color }}, Size:{{ $item->size }}</p>
                                             </div>
-
                                             {{-- <div class="rating">
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
@@ -59,90 +55,16 @@
                                     <td class="cart__price">{{ number_format($item->price,0,",",".") }}vnd</td>
                                     <td class="cart__quantity">
                                         <div class="pro-qty">
-                                            <span class="dec qtybtn"><a href="{{ Url('cart/dec-quantity/'.$item->rowId) }}">-</a></span>
+                                            <span class="dec qtybtn"><a href="{{ Url('cart/dec-quantity/'.$item->id) }}">-</a></span>
                                             <input type="text" value="{{ $item->quantity }}">
-                                            <span class="inc qtybtn"><a href="{{ Url('cart/inc-quantity/'.$item->rowId) }}">+</a></span>
+                                            <span class="inc qtybtn"><a href="{{ Url('cart/inc-quantity/'.$item->id) }}">+</a></span>
                                         </div>
                                     </td>
-                                    @php
-                                        $total = $item->price*$item->quantity;
-                                        $sum = $sum+$total;
-                                    @endphp
-                                    <td class="cart__total">{{number_format($item->price*$item->quantity,0,",",".")  }}vnd</td>
-                                    <td class="cart__close"><a href="{{ Url('cart/delete-cart/'.$item->rowId) }}"><span class="icon_close"></a></span></td>
-                                </tr>
 
+                                    <td class="cart__total">{{number_format($item->total,0,",",".")  }}vnd</td>
+                                    <td class="cart__close"><a href="{{ Url('cart/delete-cart/'.$item->id) }}"><span class="icon_close"></a></span></td>
+                                </tr>
                                 @endforeach
-
-                                {{-- <tr>
-                                    <td class="cart__product__item">
-                                        <img src="img/shop-cart/cp-2.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Zip-pockets pebbled tote briefcase</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 170.0</td>
-                                    <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="cart__total">$ 170.0</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr>
-                                <tr>
-                                    <td class="cart__product__item">
-                                        <img src="img/shop-cart/cp-3.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Black jean</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 85.0</td>
-                                    <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="cart__total">$ 170.0</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr>
-                                <tr>
-                                    <td class="cart__product__item">
-                                        <img src="img/shop-cart/cp-4.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Cotton Shirt</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 55.0</td>
-                                    <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="cart__total">$ 110.0</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr> --}}
                             </tbody>
                         </table>
                     </div>
@@ -174,9 +96,9 @@
                     <div class="cart__total__procced">
                         <h6>Tổng thanh toán</h6>
                         <ul>
-                            <li>Tổng tiền hàng <span>{{number_format($sum,0,",",".") }}vnd</span></li>
+                            <li>Tổng tiền hàng <span>{{number_format($subtotal,0,",",".") }} vnd</span></li>
                             <li>Phí vận chuyển <span>{{Cart::subtotal(0,',','.')}} vnd</span></li>
-                            <li>Tổng số tiền ({{ Cart::count(); }}) <span>{{Cart::total(0,',','.')}} vnd</span></li>
+                            <li>Tổng số tiền ({{ 0 }}) <span>{{number_format($subtotal,0,",",".") }} vnd</span></li>
                         </ul>
                         <a href="{{ Url('checkout/') }}" class="primary-btn">Proceed to checkout</a>
                     </div>
