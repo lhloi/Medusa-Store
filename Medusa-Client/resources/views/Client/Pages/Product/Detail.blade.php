@@ -3,7 +3,31 @@
     <title>Home Medusa</title>
 @endsection
 @section('css')
+    <style>
+        .nav::before {
+            position: absolute;
+            left: 0;
+            top: 13px;
+            height: 1px;
+            width: 225px;
+            background: #e1e1e1;
+            content: "";
+        }
 
+        .nav::after {
+            position: absolute;
+            right: 0;
+            top: 13px;
+            height: 1px;
+            width: 225px;
+            background: #e1e1e1;
+            content: "";
+        }
+        .nav-item {
+	margin-right: 46px;
+}
+
+    </style>
 @endsection
 @php
  $baseUrl = config('app.base_url');
@@ -198,7 +222,7 @@
 <!-- Product Details Section End -->
 @endsection
 @section('js')
-<script src="{{ $baseUrl }}/AdminBE/Layout/tinymce.min.js"></script>
+{{-- <script src="{{ $baseUrl }}/AdminBE/Layout/tinymce.min.js"></script> --}}
     {{-- <script>
         function ColorBySize(id){
 

@@ -23,10 +23,16 @@ Route::get('/', [HomeController::class,'home']);
 Route::get('/login', [LoginController::class,'login'])->name('login');
 Route::post('/check-Login', [LoginController::class,'checkLoginClient']);
 Route::post('/logout', [LoginController::class,'logout'])->name('logout');
+//login fb
+Route::get('/login-facebook', [LoginController::class,'login_facebook']);
+Route::get('/login-callback', [LoginController::class,'callback_facebook']);
+
 
 Route::get('/danh-sach-san-pham',[CategoryController::class,'index']);
 Route::get('/danh-muc/{slug}',[CategoryController::class,'getProductByCategory']);
 Route::get('/thong-tin-san-pham/{slug}',[ProductController::class,'viewProductDetail']);
+Route::post('/search-product',[ProductController::class,'searchProduct']);
+
 Route::group(['prefix'=>'cart','middleware'=>['auth']],function(){
     Route::post('/save-cart',[CartController::class,'saveCart']);
     Route::get('/show-cart',[CartController::class,'showCart']);

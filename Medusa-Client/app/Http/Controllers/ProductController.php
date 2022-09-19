@@ -19,8 +19,18 @@ class ProductController extends Controller
             Session::put($sessionKey, 1); //set giá trị cho session
             $views->increment('views');
         }
+
         $imageDetail =  product_images::where('product_id',$productDetail->id)->get();
         $nameCategory = Category::where('id',$productDetail->category_id)->select('name')->first();
         return view('Client.Pages.Product.Detail',compact('productDetail','imageDetail','nameCategory'));
+    }
+    public function searchProduct(Request $request)
+    {
+        if (empty($request->search)) {
+           return redirect('/');
+        }
+        $search_product = Products::where('name','like','%'.$request->search.'%')->orwhere('price','like','%'.$request->search.'%')->paginate(9);
+        $categorys = Category::where('parent_id','0')->orderBy('created_at','asc')->get();
+        return view('Client.Pages.Shop.Search',compact('categorys','search_product'));
     }
 }

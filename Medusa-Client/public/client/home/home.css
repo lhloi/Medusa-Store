@@ -2028,9 +2028,9 @@ ol {
 	width: 225px;
 	background: #e1e1e1;
 	content: "";
-} */
+}
 
-/* .nav::after {
+.nav::after {
 	position: absolute;
 	right: 0;
 	top: 13px;
@@ -2040,9 +2040,9 @@ ol {
 	content: "";
 } */
 
-.nav-item {
-	/* margin-right: 46px; */
-}
+/* .nav-item {
+	margin-right: 46px;
+} */
 
 .nav-item:last-child {
 	margin-right: 0;

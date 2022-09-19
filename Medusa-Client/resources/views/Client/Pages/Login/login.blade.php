@@ -68,7 +68,7 @@
 
                         <div class="social-auth-links text-center">
                             <p>- OR -</p>
-                            <a href="#" class="btn btn-primary col-md-5">
+                            <a href="{{ Url('login-facebook') }}" class="btn btn-primary col-md-5">
                                 <i class="fa fa-facebook mr-2"></i> Facebook
                             </a>
                             <a href="#" class="btn btn-danger col-md-5">
