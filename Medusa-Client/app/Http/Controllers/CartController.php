@@ -9,12 +9,14 @@ use App\Models\Product_color;
 use App\Models\Cart;
 use App\Models\Cart_item;
 use App\Models\Order;
+use App\Models\Coupon;
 use App\Models\Order_item;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use App\Models\delivery_address;
 use Illuminate\Support\Facades\Log;
 use DB;
+use Session;
 class CartController extends Controller
 {
     public function saveCart(Request $request)
@@ -117,8 +119,9 @@ class CartController extends Controller
             $order->subTotal = $subtotal;
             $order->tax = '0';
             $order->shipping = '0';
-            $order->total = $order->subTotal+ $order->tax+$order->shipping;
+            $order->total = $request->total + $order->tax + $order->shipping;
             $order->name = $address->name;
+            $order->coupon_id = Session::get('coupon')[0]['id'];
             $order->phone = $address->phone;
             $order->email = Auth::user()->email;
             $order->address = $address->address;
@@ -157,5 +160,26 @@ class CartController extends Controller
 
 
     }
+//---------------------------------------------------- Coupon----------
+    public function checkCoupon(Request $request)
+    {
+        $coupon = Coupon::where('code', $request->coupon)->first();
+        if ($coupon) {
+            $coupon_session = Session::get('coupon');
+            // if($coupon_session){
+                $cou[] =array(
+                    'id' =>$coupon->id,
+                    'code' =>$coupon->code,
+                    'condition' =>$coupon->condition,
+                    'number' =>$coupon->number
+                );
+                Session::put('coupon',$cou);
+            // }
+            Session::save();
+            return redirect()->back();
+        }else{
+            return redirect()->back();
+        }
 
+    }
 }

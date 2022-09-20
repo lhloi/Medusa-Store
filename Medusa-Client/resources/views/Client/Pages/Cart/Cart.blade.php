@@ -86,8 +86,8 @@
                 <div class="col-lg-6">
                     <div class="discount__content">
                         <h6>Discount codes</h6>
-                        <form action="#">
-                            <input type="text" placeholder="Enter your coupon code">
+                        <form action="{{ Url('/check-coupon') }}">
+                            <input type="text" name="coupon" placeholder="Enter your coupon code">
                             <button type="submit" class="site-btn">Apply</button>
                         </form>
                     </div>
@@ -98,7 +98,28 @@
                         <ul>
                             <li>Tổng tiền hàng <span>{{number_format($subtotal,0,",",".") }} vnd</span></li>
                             <li>Phí vận chuyển <span>{{Cart::subtotal(0,',','.')}} vnd</span></li>
-                            <li>Tổng số tiền ({{ 0 }}) <span>{{number_format($subtotal,0,",",".") }} vnd</span></li>
+                            @if (Session::get('coupon'))
+                                @foreach (Session::get('coupon') as $cou)
+                                    @if ($cou['condition'] ==1)
+                                        <li> Voucher giảm giá: <span>-{{$cou['number']}}%</span></li>
+                                        @php
+                                            $subtotal =$subtotal-($subtotal*$cou['number'])/100
+                                        @endphp
+                                    @elseif($cou['condition'] ==2)
+                                        <li> Voucher giảm giá: <span>-{{number_format($cou['number'],0,",",".")}}vnd</span></li>
+                                        @php
+                                            // $subtotal = $subtotal-$cou['number']
+                                            $subtotal = ($subtotal-$cou['number']<0) ? 0 : $subtotal-$cou['number'] ;
+                                        @endphp
+
+                                    @endif
+                                @endforeach
+
+                            @endif
+
+                            {{-- <li> Voucher giảm giá: <span>{{Cart::subtotal(0,',','.')}} vnd</span></li> --}}
+
+                            <li>Tổng số tiền<span>{{number_format($subtotal,0,",",".") }} vnd</span></li>
                         </ul>
                         <a href="{{ Url('checkout/') }}" class="primary-btn">Proceed to checkout</a>
                     </div>

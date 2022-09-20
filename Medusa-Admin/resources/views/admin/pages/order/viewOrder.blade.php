@@ -171,7 +171,7 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <tr>
-                                                <th style="width:50%">Subtotal:</th>
+                                                <th style="width:50%">tổng:</th>
                                                 <td>{{ number_format($order->subTotal) }}vnd</td>
                                             </tr>
                                             <tr>
@@ -179,7 +179,20 @@
                                                 <td>{{ number_format($order->shipping) }}vnd</td>
                                             </tr>
                                             <tr>
-                                                <th>Total:</th>
+                                                <th>Mã giảm giá:</th>
+                                                @if ($order->coupon_id)
+                                                    @foreach ($order->coupon as $cou)
+                                                        @if ($cou->condition ==1)
+                                                            <td>{{ $cou->number }}%</td>
+                                                        @elseif($cou->condition ==2)
+                                                            <td>-{{number_format($cou['number'],0,",",".")}}vnd</td>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+
+                                            </tr>
+                                            <tr>
+                                                <th>Tổng thanh toán:</th>
                                                 <td>{{ number_format($order->total) }}vnd</td>
                                             </tr>
                                         </table>

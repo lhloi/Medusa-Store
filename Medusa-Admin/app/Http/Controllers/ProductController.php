@@ -9,6 +9,7 @@ use App\Models\Product_Images;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Models\Tags;
+use App\Models\Coupon;
 use App\Models\Product_Tags;
 use App\Models\Product_color;
 use App\Models\product_stock;
@@ -319,4 +320,79 @@ class ProductController extends Controller
 
 
     }
+    // =============================  Coupon  ======================================
+    public function listCoupon()
+    {
+        $coupon = Coupon::all();
+        return view('admin.pages.Coupon.listCoupon',compact('coupon'));
+    }
+
+    public function saveCoupon(Request $request)
+    {
+
+        $request->validate([
+            'name' => 'required|unique:coupon|max:255',
+            'code' => 'required|unique:coupon|min:5|max:10',
+            'condition' => 'required',
+            'quantity' => 'required',
+            'number' => 'required',
+        ]);
+        $coupon = new Coupon();
+        $coupon->name = $request->name;
+        $coupon->code = $request->code;
+        $coupon->condition = $request->condition;
+        $coupon->quantity = $request->quantity;
+        $coupon->number = $request->number;
+        $coupon->save();
+        return Redirect::back()->with('message','Thêm coupon thành công');
+
+    }
+    public function editCoupon($id)
+    {
+        $couponById = Coupon::find($id);
+        $coupon = Coupon::all();
+        return view('admin.pages.Coupon.listCoupon',compact('coupon','couponById'));
+    }
+    public function updateCoupon(Request $request,$id)
+    {
+
+        $request->validate([
+            'name' => 'required|max:255',
+            'code' => 'required|min:5|max:10',
+            'condition' => 'required',
+            'quantity' => 'required',
+            'number' => 'required',
+        ]);
+        $coupon = Coupon::find($id);
+        $coupon->name = $request->name;
+        $coupon->code = $request->code;
+        $coupon->condition = $request->condition;
+        $coupon->quantity = $request->quantity;
+        $coupon->number = $request->number;
+        $coupon->save();
+        return Redirect::to('/admin/product/coupon')->with('message','Cập nhập coupon thành công');
+
+    }
+
+    public function deleteCoupon($id)
+    {
+        try {
+            Coupon::find($id)->delete();
+            return response()->json([
+                'code' => 200,
+                'message' => 'success'
+            ],200);
+
+        } catch (\Exception $exception) {
+            Log::error("message:".$exception->getMessage().' Line :'.$exception->getLine());
+            return response()->json([
+                'code' => 500,
+                'message' => 'fail'
+            ],500);
+        }
+
+
+    }
+
+
 }

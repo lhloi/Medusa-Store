@@ -41,6 +41,7 @@ Route::group(['prefix'=>'cart','middleware'=>['auth']],function(){
     Route::get('/inc-quantity/{id}',[CartController::class,'incQuantityCart']);
 });
 Route::get('/checkout',[CartController::class,'viewCheckOut'])->middleware('auth');
+Route::get('/check-coupon',[CartController::class,'checkCoupon'])->middleware('auth');
 
 Route::group(['prefix'=>'order','middleware'=>['auth']],function(){
     Route::post('/place',[CartController::class,'orderPlace']);

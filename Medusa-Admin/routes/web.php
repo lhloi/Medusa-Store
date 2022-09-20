@@ -79,6 +79,13 @@ Route::group(['prefix'=>'admin','middleware'=>['auth']],function(){
         Route::post('/save-product-size', [ProductController::class,'saveProductSize']);
         Route::get('/delete-product-size/{id}', [ProductController::class,'deleteProductSize']);
 
+        // coupon
+        Route::get('/coupon', [ProductController::class,'listCoupon']);
+        Route::post('/save-coupon', [ProductController::class,'saveCoupon']);
+        Route::get('/delete-coupon/{id}', [ProductController::class,'deleteCoupon']);
+        Route::get('/edit-coupon/{id}', [ProductController::class,'editCoupon']);
+        Route::get('/update-coupon/{id}', [ProductController::class,'updateCoupon']);
+
     });
     Route::group(['prefix'=>'order'],function(){
         Route::get('/', [OrderController::class,'listOrder']);

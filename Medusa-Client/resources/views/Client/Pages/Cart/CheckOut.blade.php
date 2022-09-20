@@ -13,6 +13,35 @@
         .checkout__order{
             background-color:white !important ;
         }
+        input.discount {
+            height: 35px;
+            /* width: 70%; */
+            border: 1px solid #444444;
+            border-radius: 50px;
+            padding-left: 20px;
+            padding-right: 20px;
+            font-size: 14px;
+            color: #444444;
+        }
+        .btn-discount{
+            font-size: 14px;
+            color: #ffffff;
+            background: #ca1515;
+            font-weight: 600;
+            border: none;
+            text-transform: uppercase;
+            display: inline-block;
+            padding: 6px 0;
+            border-radius: 50px;
+        }
+        /* .total{
+            border: 0;
+            float: right;
+            color: #ca1515;
+            text-align: right;
+            font-weight: 600;
+            
+        } */
     </style>
     {{-- <link rel="stylesheet" href="{{ asset('client/home/banner.css') }}" type="text/css"> --}}
 @endsection
@@ -106,9 +135,7 @@ $baseUrl = config('app.base_url');
                                                     </div>
                                                 </td>
                                                 <td class="cart__price">{{ number_format($item->price,0,",",".") }}vnd</td>
-                                                <td class="cart__quantity">
-                                                        {{ $item->quantity }}
-                                                </td>
+                                                <td class="cart__quantity">{{ $item->quantity }}</td>
                                                 @php
                                                     $quantityCount += $item->quantity
                                                 @endphp
@@ -155,6 +182,12 @@ $baseUrl = config('app.base_url');
 
                                 </ul>
                             </div>
+                            {{-- <div class="discount pt-3">
+                                <form action="{{ Url('/check-coupon') }}" method="POST" class="row">
+                                    <input type="text" class="discount col-8" name="coupon" placeholder="Enter your coupon code">
+                                    <button type="submit" class="col-3 btn-discount">Apply</button>
+                                </form>
+                            </div> --}}
                             <div class="checkout__order__total">
                                 <ul>
                                     <li>Tạm tính ({{ $quantityCount }}) <span>{{  number_format($subtotal,0,",",".")  }} vnd</span></li>
@@ -166,7 +199,27 @@ $baseUrl = config('app.base_url');
                                     @php
                                         $total = $subtotal+$shipping;
                                     @endphp
-                                    <li>Tổng thanh toán <span>{{  number_format($total,0,",",".")  }} vnd</span></li>
+                                    @if (Session::get('coupon'))
+                                    @foreach (Session::get('coupon') as $cou)
+                                        @if ($cou['condition'] ==1)
+                                            <li> Voucher giảm giá: <span>-{{$cou['number']}}%</span></li>
+                                            @php
+                                                $total =$total-($total*$cou['number'])/100
+                                            @endphp
+                                        @elseif($cou['condition'] ==2)
+                                            <li> Voucher giảm giá: <span>-{{number_format($cou['number'],0,",",".")}}vnd</span></li>
+                                            @php
+                                                // $subtotal = $subtotal-$cou['number']
+                                                $total = ($total-$cou['number']<0) ? 0 : $total-$cou['number'] ;
+                                            @endphp
+    
+                                        @endif
+                                    @endforeach
+    
+                                @endif
+                                    
+                                    <li>Tổng thanh toán: <span>{{number_format($total,0,",",".")}}vnd</span></li>
+                                    <input type="hidden" value="{{$total}}" name="total">
                                 </ul>
                             </div>
                             <button type="submit" class="site-btn">Place oder</button>

@@ -18,9 +18,6 @@
               <div class="info">
                   <a href="#" class="d-block">{{ Auth::user()->name }}</a>
               </div>
-              <div class="d-flex justify-content-end align-items-center">
-                  <a href="{{ URL::to('/admin/logout') }}">Logout</a>
-              </div>
           </div>
 
           <!-- SidebarSearch Form -->
@@ -79,7 +76,13 @@
                             <li class="nav-item">
                                 <a href="{{ Url('admin/brand') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Thương Hiệu</p>
+                                    <p>Thương hiệu</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ Url('admin/product/coupon') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Mã giảm giá</p>
                                 </a>
                             </li>
                             <li class="nav-item">
