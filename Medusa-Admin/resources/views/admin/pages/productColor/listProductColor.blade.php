@@ -17,6 +17,7 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+                    @can('add-product-color')
                     <div class="col-4 ">
                         <div class="card-body">
                             <form method="POST" action="{{ Url('admin/product/save-product-color/') }}">
@@ -61,6 +62,7 @@
 
                         </div>
                     </div>
+                    @endcan
                     <div class="card col-8 ">
                         <div class="card-body">
                             <table class="table">
@@ -92,7 +94,7 @@
                                                     </a>
                                                 @endcan --}}
 
-                                                @can('delete-role')
+                                                @can('delete-product-color')
                                                     <a href="" data-url="{{ Url('admin/product/delete-product-color/'.$data->id) }}"
                                                     class="btn btn-danger action_Delete">
                                                     Delete

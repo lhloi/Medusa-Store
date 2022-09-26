@@ -17,6 +17,7 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+                    @can('add-coupon')
                     <div class=" col-4 ">
                         <div class="card-body">
                             @if (!isset($couponById))
@@ -77,6 +78,7 @@
 
                         </div>
                     </div>
+                    @endcan
                     <div class="card col-8 ">
                         <div class="card-body">
                             <table class="table">
@@ -120,12 +122,16 @@
                                         </td>
 
                                         <td>
+                                            @can('edit-coupon')
                                             <a class="btn btn-info btn-sm" href="{{ Url('admin/product/edit-coupon/'.$data->id) }}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
+                                            @endcan
+                                            @can('delete-coupon')
                                             <a class="btn btn-danger btn-sm action_Delete" data-url="{{ Url('admin/product/delete-coupon/'.$data->id) }}">
                                                 <i class="fas fa-trash"></i>
                                             </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

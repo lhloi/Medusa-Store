@@ -9,10 +9,10 @@
             <div class="col-xl-6 col-lg-7">
                 <nav class="header__menu">
                     <ul>
-                        <li class="active"><a href="{{ Url('/') }}">Home</a></li>
+                        <li class="{{ isset($active)?$active == 'home'? 'active': '':''}}"><a href="{{ Url('/') }}">Home</a></li>
                         <li><a href="#">Women’s</a></li>
                         <li><a href="#">Men’s</a></li>
-                        <li><a href="{{ Url('danh-sach-san-pham') }}">Shop</a></li>
+                        <li class="{{ isset($active)?$active == 'shop'? 'active': '':''}}"><a href="{{ Url('danh-sach-san-pham') }}">Shop</a></li>
                         {{-- <li><a href="#">Pages</a>
                             <ul class="dropdown">
                                 <li><a href="./product-details.html">Product Details</a></li>
@@ -57,6 +57,7 @@
                                 <a role="button" data-bs-toggle="dropdown">
                                     {{ Auth::user()->name }}
                                 </a>
+                                <input type="hidden" class="userid" value="{{ Auth::user()->id }}">
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ Url('user/profile') }}">Tài khoản của tôi</a>
@@ -74,10 +75,10 @@
                     <ul class="header__right__widget">
                         <li><span class="icon_search search-switch"></span></li>
                         <li><a href="#"><span class="icon_heart_alt"></span>
-                            <div class="tip">2</div>
+                            {{-- <div class="tip">2</div> --}}
                         </a></li>
-                        <li><a href="{{ Url('cart/show-cart') }}"><span class="icon_bag_alt"></span>
-                            <div class="tip">2</div>
+                        <li><a  href="{{ Url('cart/show-cart') }}"><span class="icon_bag_alt"></span>
+                            <div class="coutcart"></div>
                         </a></li>
                     </ul>
                 </div>
@@ -99,4 +100,6 @@
         </form>
     </div>
 </div>
+
+
 <!-- Search End -->

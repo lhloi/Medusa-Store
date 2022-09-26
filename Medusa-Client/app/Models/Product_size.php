@@ -9,5 +9,8 @@ class Product_size extends Model
 {
     use HasFactory;
     protected $table = 'product_size';
-
+    public function stock()
+    {
+        return $this->hasMany(Product_stock::class,'size_id');
+    }
 }

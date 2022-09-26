@@ -7,6 +7,11 @@
  use App\Policies\RolePolicy;
  use App\Policies\SliderPolicy;
  use App\Policies\UserPolicy;
+ use App\Policies\ColorPolicy;
+ use App\Policies\SizePolicy;
+ use App\Policies\CouponPolicy;
+ use App\Policies\BrandPolicy;
+ use App\Policies\OrderPolicy;
 
  class PermissionGateAndPolicyAccess{
 
@@ -18,6 +23,11 @@
         $this->defineGateRole();
         $this->defineGateSlider();
         $this->defineGateUser();
+        $this->defineGateColor();
+        $this->defineGateSize();
+        $this->defineGateCoupon();
+        $this->defineGateBrand();
+        $this->defineGateOrder();
     }
 
     public function defineGateCategory()
@@ -62,4 +72,40 @@
         Gate::define('edit-user', [UserPolicy::class,'update']);
         Gate::define('delete-user', [UserPolicy::class,'delete']);
     }
+    public function defineGateColor()
+    {
+        Gate::define('list-product-color', [ColorPolicy::class,'view']);
+        Gate::define('add-product-color', [ColorPolicy::class,'create']);
+        Gate::define('edit-product-color', [ColorPolicy::class,'update']);
+        Gate::define('delete-product-color', [ColorPolicy::class,'delete']);
+    }
+    public function defineGateSize()
+    {
+        Gate::define('list-product-size', [SizePolicy::class,'view']);
+        Gate::define('add-product-size', [SizePolicy::class,'create']);
+        Gate::define('edit-product-size', [SizePolicy::class,'update']);
+        Gate::define('delete-product-size', [SizePolicy::class,'delete']);
+    }
+    public function defineGateCoupon()
+    {
+        Gate::define('list-coupon', [CouponPolicy::class,'view']);
+        Gate::define('add-coupon', [CouponPolicy::class,'create']);
+        Gate::define('edit-coupon', [CouponPolicy::class,'update']);
+        Gate::define('delete-coupon', [CouponPolicy::class,'delete']);
+    }
+    public function defineGateBrand()
+    {
+        Gate::define('list-brand', [BrandPolicy::class,'view']);
+        Gate::define('add-brand', [BrandPolicy::class,'create']);
+        Gate::define('edit-brand', [BrandPolicy::class,'update']);
+        Gate::define('delete-brand', [BrandPolicy::class,'delete']);
+    }
+    public function defineGateOrder()
+    {
+        Gate::define('list-order', [OrderPolicy::class,'view']);
+        Gate::define('add-order', [OrderPolicy::class,'create']);
+        Gate::define('edit-order', [OrderPolicy::class,'update']);
+        Gate::define('delete-order', [OrderPolicy::class,'delete']);
+    }
+
  }

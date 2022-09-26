@@ -23,29 +23,29 @@ class CartController extends Controller
     {
         $userId = Auth::user()->id;
         $cart = Cart::firstOrCreate(['user_id'=>$userId]);
-
         $size = Product_size::find($request->size);
         $color = Product_color::find($request->color);
         $product = Products::find($request->product_id);
-        $cart_item = Cart_item::where('product_id',$request->product_id)->where('size',$size->name)->where('color',$color->name)->first();
+        $cart_item = Cart_item::where('product_id',$request->product_id)->where('size',$size->name)->where('color',$color->name)->where('cart_id',$cart->id)->first();
 
         if ($cart_item) {
             $cart_item->quantity = $cart_item->quantity + $request->quantity;
             $cart_item->save();
         }else{
-            $Cart_item = new Cart_item();
-            $Cart_item['cart_id'] =$cart->id;
-            $Cart_item['product_id'] =$product->id;
-            $Cart_item['price'] = $product->price;
-            $Cart_item['quantity'] = $request->quantity;
-            $Cart_item['total'] = $request->quantity*$product->price;
-            $Cart_item['name'] = $product->name;
-            $Cart_item['size'] = $size->name;
-            $Cart_item['color'] = $color->name;
-            $Cart_item['image'] = $product->feature_image_path;
-            $Cart_item->save();
-        }
+            $cart_item = new Cart_item();
+            $cart_item['cart_id'] =$cart->id;
+            $cart_item['product_id'] =$product->id;
+            $cart_item['price'] = $product->price;
+            $cart_item['quantity'] = $request->quantity;
+            $cart_item['total'] = $request->quantity*$product->price;
+            $cart_item['name'] = $product->name;
+            $cart_item['size'] = $size->name;
+            $cart_item['color'] = $color->name;
+            $cart_item['image'] = $product->feature_image_path;
+            $cart_item->save();
+        };
 
+        // print_r($cart->id);
         // $cart_item = Cart_item::updateOrCreate($data);
         return redirect('cart/show-cart');
 
@@ -53,14 +53,10 @@ class CartController extends Controller
     public function showCart()
     {
         $userId = Auth::user()->id;
+        // print($userId);
         $cart = Cart::firstOrCreate(['user_id'=>$userId]);
-        // $cart = Cart::where('user_id',$userId)->first();
         $cart_item = Cart_item::where('cart_id',$cart->id)->get();
         $subtotal = Cart_item::where('cart_id',$cart->id)->sum('total');
-        // print($subtotal);
-        // $sumPrice = Cart_item::sum('price');
-        // print( $sumPrice);
-
         return view('Client.Pages.Cart.Cart',compact('cart_item','subtotal'));
     }
 
@@ -92,6 +88,15 @@ class CartController extends Controller
         return redirect('cart/show-cart');
     }
 
+    public function loadQtyCart(Request $request)
+    {
+        $userId = Auth::user()->id;
+        $cart = Cart::where('user_id',  $userId)->first();
+        $qty = $cart->cart_item->sum('quantity');
+
+        echo('<div class="tip" id="tip_cart">'.$qty.'</div>');
+    }
+
 
     //---------------------------------------------------- ChechOut
     public function viewCheckOut()
@@ -108,6 +113,14 @@ class CartController extends Controller
     {
         try {
             DB::beginTransaction();
+            $coupon_id = Session::get('coupon')[0]['id'];
+            $coupon = Coupon::find($coupon_id);
+            $coupon->quantity = $coupon->quantity -1;
+            if ($coupon->quantity < 0) {
+                // $coupon->delete();
+            }else{
+                // $coupon->save();
+            }
             $userId = Auth::user()->id;
             $cart = Cart::where('user_id',$userId)->first();
             $address= delivery_address::where('user_id',$userId)->where('status','1')->first();
@@ -121,7 +134,7 @@ class CartController extends Controller
             $order->shipping = '0';
             $order->total = $request->total + $order->tax + $order->shipping;
             $order->name = $address->name;
-            $order->coupon_id = Session::get('coupon')[0]['id'];
+            $order->coupon_id = $coupon_id;
             $order->phone = $address->phone;
             $order->email = Auth::user()->email;
             $order->address = $address->address;
@@ -140,6 +153,11 @@ class CartController extends Controller
                 $order_item->total = $data->total;
                 $order_item->size = $data->size;
                 $order_item->color = $data->color;
+                $size = Product_size::where('name',$data->size)->first();
+                $color = Product_color::where('name',$data->color)->first();
+                $stock = product_stock::where('color_id',$color->id)->where('size_id',$size->id)->where('product_id',$data->product_id)->first();
+                $stock->quantity = $stock->quantity - $data->quantity;
+                $stock->save();
                 $order_item->save();
             }
             $transaction = new Transaction();

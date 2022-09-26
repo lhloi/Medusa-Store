@@ -17,7 +17,8 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-4 ">
+                    @can('add-brand')
+                    <div class="col-md-4 ">
                         <div class="card-body">
                             @if (!isset($brandById))
                                 <form method="POST" action="{{ Url('admin/brand/save-brand/') }}">
@@ -52,7 +53,8 @@
 
                         </div>
                     </div>
-                    <div class="card col-8 ">
+                    @endcan
+                    <div class="card col-12 col-md-8 ">
                         <div class="card-body">
                             <table class="table">
                                 <thead>
@@ -71,13 +73,13 @@
 
 
                                             <td>
-                                                @can('edit-role')
+                                                @can('edit-brand')
                                                 <a class="btn btn-info btn-sm" href="{{ Url('admin/brand/edit-brand/'.$data->id) }}">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
                                                 @endcan
 
-                                                @can('delete-role')
+                                                @can('delete-brand')
                                                 <a class="btn btn-danger btn-sm action_Delete" data-url="{{ Url('admin/brand/delete-brand/'.$data->id) }}">
                                                     <i class="fas fa-trash"></i>
                                                 </a>

@@ -6,6 +6,7 @@
     <meta name="description" content="Ashion Template">
     <meta name="keywords" content="Ashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     @yield('title')
@@ -35,7 +36,12 @@
 
 
     <!-- Header Section Begin -->
+    @if (isset($active))
+    @include('Client.Layout.header',['active'=>$active])
+    @else
     @include('Client.Layout.header')
+    @endif
+
     <!-- Header Section End -->
 
     @yield('content')
@@ -63,6 +69,24 @@
     <script src="{{ asset('ashion-master/js/main.js') }}"></script>
     <script src="{{ asset('ashion-master/js/bootstrap.bundle.min.js') }}"></script>
     @yield('js')
+    <script>
+        $(document).ready(function(){
+            var _token = $('input[name="_token"]').val();
+            load_qty_card();
+
+
+            function load_qty_card(){
+                $.ajax({
+                    url:"{{ Url('/load-qty-cart') }}",
+                    method:"POST",
+                    data:{_token:_token},
+                    success:function(data){
+                        $('.coutcart').html(data);
+                    }
+                })
+            }
+        })
+    </script>
 </body>
 
 </html>

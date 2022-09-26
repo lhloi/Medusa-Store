@@ -10,6 +10,7 @@
 @endsection
 @php
  $baseUrl = config('app.base_url');
+ $active = 'home'
 @endphp
 @section('content')
 
@@ -22,7 +23,7 @@
     <!-- Product Section End -->
 
     <!-- Categories Section Begin -->
-    @include('Client.Pages.Home.components.categories')
+    {{-- @include('Client.Pages.Home.components.categories') --}}
 
     <!-- Categories Section End -->
 

@@ -17,6 +17,7 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+                    @can('add-product-size')
                     <div class=" col-4 ">
                         <div class="card-body">
                             <form method="POST" class="" action="{{ Url('admin/product/save-product-size/') }}">
@@ -53,6 +54,7 @@
 
                         </div>
                     </div>
+                    @endcan
                     <div class="card col-8 ">
                         <div class="card-body">
                             <table class="table">
@@ -74,7 +76,7 @@
                                         <td>{{ $data->slug }}</td>
 
                                         <td>
-                                            @can('delete-role')
+                                            @can('delete-product-size')
                                             <a data-url="{{ Url('admin/product/delete-product-size/'.$data->id) }}" class="btn btn-danger action_Delete">
                                             Delete
                                             </a>

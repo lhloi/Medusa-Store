@@ -453,7 +453,7 @@ ol {
 	position: absolute;
 	right: -8px;
 	top: -2px;
-	content: "/";
+	/* content: "/"; */
 	font-size: 13px;
 }
 
@@ -1994,6 +1994,7 @@ ol {
 
 .product__details__widget ul li .size__btn .size label.active {
 	color: #ca1515;
+    font-weight: 600;
 }
 
 .product__details__widget ul li .size__btn .size label input {

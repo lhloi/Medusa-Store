@@ -27,7 +27,7 @@ Route::post('/logout', [LoginController::class,'logout'])->name('logout');
 Route::get('/login-facebook', [LoginController::class,'login_facebook']);
 Route::get('/login-callback', [LoginController::class,'callback_facebook']);
 
-
+route::post('/load-qty-cart',[CartController::class,'loadQtyCart']);
 Route::get('/danh-sach-san-pham',[CategoryController::class,'index']);
 Route::get('/danh-muc/{slug}',[CategoryController::class,'getProductByCategory']);
 Route::get('/thong-tin-san-pham/{slug}',[ProductController::class,'viewProductDetail']);

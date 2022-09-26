@@ -109,7 +109,7 @@
                                 </div>
                             </li> --}}
                             <li>
-                                <span>Available color:</span>
+                                <span>Màu:</span>
                                 <div class="color__checkbox">
                                     @foreach ($productDetail->stock->unique('color_id') as $item)
                                         @foreach ($item->color as $data)
@@ -123,7 +123,7 @@
                                 </div>
                             </li>
                             <li>
-                                <span>Available size:</span>
+                                <span>Size:</span>
                                 <div class="size__btn" id="size__btn">
                                     <div class="size">
                                         @foreach ($productDetail->stock->unique('size_id') as $item)
@@ -141,14 +141,14 @@
                                 </div>
                             </li>
                             <li>
-                                <span>Promotions:</span>
+                                <span>Shipping:</span>
                                 <p>Free shipping</p>
                             </li>
                         </ul>
                     </div>
                     <div class="product__details__button mt-3">
                         <div class="quantity">
-                            <span>Quantity:</span>
+                            <span>Số lượng:</span>
                             <div class="pro-qty">
                                 <span class="dec qtybtn">-</span>
                                 <input type="text" name="quantity" value="1">
@@ -171,9 +171,9 @@
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">MÔ TẢ SẢN PHẨM</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">CHI TIẾT SẢN PHẨM</a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">ĐÁNH GIÁ SẢN PHẨM</a>
                         </li>

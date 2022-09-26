@@ -9,54 +9,27 @@ $baseUrl = config('app.base_url');
                     <div class="section-title">
                         <h4>Hot Trend</h4>
                     </div>
+                    @if (isset($feature))
+                    @foreach ($feature as $item)
                     <div class="trend__item">
                         <div class="trend__item__pic">
-                            <img src="ashion-master/img/trend/ht-1.jpg" alt="">
+                            <img src="{{ $baseUrl.$item->feature_image_path }}" width="90px" height="90px" alt="">
                         </div>
-                        <div class="trend__item__text">
-                            <h6>Chain bucket bag</h6>
-                            <div class="rating">
+                        <div class="product__item__text pt-0" style="text-align: left;">
+                            <h6><a href="{{ Url('thong-tin-san-pham/'.$item->slug) }}">{{ $item->name }}</a></h6>
+                            {{-- <div class="rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product__price">$ 59.0</div>
-                        </div>
-                    </div>
-                    <div class="trend__item">
-                        <div class="trend__item__pic">
-                            <img src="ashion-master/img/trend/ht-2.jpg" alt="">
-                        </div>
-                        <div class="trend__item__text">
-                            <h6>Pendant earrings</h6>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product__price">$ 59.0</div>
+                            </div> --}}
+                            <div class="product__price">{{ number_format($item->price,0,",",".") }}vnd</div>
                         </div>
                     </div>
-                    <div class="trend__item">
-                        <div class="trend__item__pic">
-                            <img src="ashion-master/img/trend/ht-3.jpg" alt="">
-                        </div>
-                        <div class="trend__item__text">
-                            <h6>Cotton T-Shirt</h6>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product__price">$ 59.0</div>
-                        </div>
-                    </div>
+                    @endforeach
+
+                @endif
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6">
@@ -64,54 +37,28 @@ $baseUrl = config('app.base_url');
                     <div class="section-title">
                         <h4>Best seller</h4>
                     </div>
-                    <div class="trend__item">
-                        <div class="trend__item__pic">
-                            <img src="ashion-master/img/trend/bs-1.jpg" alt="">
-                        </div>
-                        <div class="trend__item__text">
-                            <h6>Cotton T-Shirt</h6>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
+                    @if (isset($seller))
+                        @foreach ($seller as $item)
+                            <div class="trend__item">
+                                <div class="trend__item__pic">
+                                    <img src="{{ $baseUrl.$item->product->first()->feature_image_path }}" width="90px" height="90px" alt="">
+                                </div>
+                                <div class="product__item__text pt-0" style="text-align: left;">
+                                    <h6><a href="{{ Url('thong-tin-san-pham/'.$item->product->first()->slug) }}">{{ $item->product->first()->name }}</a></h6>
+                                    {{-- <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div> --}}
+                                    <div class="product__price">{{ number_format($item->product->first()->price,0,",",".") }}vnd</div>
+                                </div>
                             </div>
-                            <div class="product__price">$ 59.0</div>
-                        </div>
-                    </div>
-                    <div class="trend__item">
-                        <div class="trend__item__pic">
-                            <img src="ashion-master/img/trend/bs-2.jpg" alt="">
-                        </div>
-                        <div class="trend__item__text">
-                            <h6>Zip-pockets pebbled tote <br />briefcase</h6>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product__price">$ 59.0</div>
-                        </div>
-                    </div>
-                    <div class="trend__item">
-                        <div class="trend__item__pic">
-                            <img src="ashion-master/img/trend/bs-3.jpg" alt="">
-                        </div>
-                        <div class="trend__item__text">
-                            <h6>Round leather bag</h6>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product__price">$ 59.0</div>
-                        </div>
-                    </div>
+                        @endforeach
+
+                    @endif
+
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6">
@@ -125,8 +72,8 @@ $baseUrl = config('app.base_url');
                             <div class="trend__item__pic">
                                 <img src="{{ $baseUrl.$item->feature_image_path }}" width="90px" height="90px" alt="">
                             </div>
-                            <div class="trend__item__text">
-                                <h6>{{ $item->name }}</h6>
+                            <div class="product__item__text pt-0" style="text-align: left;">
+                                <h6><a href="{{ Url('thong-tin-san-pham/'.$item->slug) }}">{{ $item->name }}</a></h6>
                                 {{-- <div class="rating">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>

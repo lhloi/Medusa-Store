@@ -8,7 +8,7 @@
                 <div class="accordion" id="accordionExample">
                     @foreach ($categorys as $data)
                         <div class="card">
-                            <div class="card-heading">
+                            <div class="card-heading ">
                                 <a data-toggle="collapse" data-target="#{{ $data->slug }}">{{ $data->name }}</a>
                             </div>
                             <div id="{{ $data->slug }}" class="collapse" data-parent="#accordionExample">

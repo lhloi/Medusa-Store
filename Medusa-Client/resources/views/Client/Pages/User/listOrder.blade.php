@@ -71,7 +71,7 @@
                             </tbody>
                         </table>
                         <div class="mt-2 row">
-                            <div class="total col-10">Tổng thanh toán :<span>{{  number_format($data->total,0,",",".")  }} vnd</span></div>
+                            <div class="total col-10">Tổng thanh toán :<span>{{  number_format($data->total,0,",",".")  }} vnd</span> <span style="opacity: 0.7;font-style: italic;">({{ date_format($data->created_at , 'd/m/Y') }})</span></div>
                             <div class="col-2">
                                 {{-- <button type="button" disabled class="btn btn-outline-danger btn-sm"> --}}
 

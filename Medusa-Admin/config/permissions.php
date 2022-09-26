@@ -11,6 +11,11 @@ return [
         'slider' =>'Slider',
         'user'=>'Nhân Viên',
         'role'=>'Vai Trò',
+        'product-color'=>'Màu sản phẩm',
+        'product-size'=>'Size sản phẩm',
+        'coupon'=>'Mã giảm giá',
+        'order'=>'Order',
+        'brand'=>'Thương Hiệu',
     ],
     'module_childrent'=>[
         'list'=>'Danh Sách',

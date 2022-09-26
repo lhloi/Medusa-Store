@@ -40,7 +40,7 @@
             color: #ca1515;
             text-align: right;
             font-weight: 600;
-            
+
         } */
     </style>
     {{-- <link rel="stylesheet" href="{{ asset('client/home/banner.css') }}" type="text/css"> --}}
@@ -212,12 +212,12 @@ $baseUrl = config('app.base_url');
                                                 // $subtotal = $subtotal-$cou['number']
                                                 $total = ($total-$cou['number']<0) ? 0 : $total-$cou['number'] ;
                                             @endphp
-    
+
                                         @endif
                                     @endforeach
-    
+
                                 @endif
-                                    
+
                                     <li>Tổng thanh toán: <span>{{number_format($total,0,",",".")}}vnd</span></li>
                                     <input type="hidden" value="{{$total}}" name="total">
                                 </ul>

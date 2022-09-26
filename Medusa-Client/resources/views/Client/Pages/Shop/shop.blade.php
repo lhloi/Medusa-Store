@@ -10,6 +10,7 @@
 @endsection
 @php
  $baseUrl = config('app.base_url');
+ $active = 'shop'
 @endphp
 @section('content')
     <!-- Breadcrumb Begin -->
@@ -48,9 +49,8 @@
                             </div>
                         </div>
                         @endforeach
-                        <div class="col-lg-12 text-center">
-                            {{ $products->links('pagination::bootstrap-4') }}
-                        </div>
+                            {{ $products->links('client.Pages.Shop.components.page') }}
+
 
 
                         {{-- <div class="col-lg-12 text-center">

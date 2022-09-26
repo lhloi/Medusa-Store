@@ -9,5 +9,8 @@ class Product_color extends Model
 {
     use HasFactory;
     protected $table = 'product_color';
-
+    public function stock()
+    {
+        return $this->hasMany(Product_stock::class,'color_id');
+    }
 }

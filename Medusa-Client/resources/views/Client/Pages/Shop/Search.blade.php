@@ -50,19 +50,7 @@
                             </div>
                         </div>
                         @endforeach
-                        <div class="col-lg-12 text-center">
-                            {{ $search_product->links('pagination::bootstrap-4') }}
-                        </div>
-
-
-                        {{-- <div class="col-lg-12 text-center">
-                            <div class="pagination__option">
-                                <a href="#">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <a href="#"><i class="fa fa-angle-right"></i></a>
-                            </div>
-                        </div> --}}
+                        {{ $search_product->links('client.Pages.Shop.components.page') }}
                     </div>
                 </div>
             </div>
