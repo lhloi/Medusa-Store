@@ -69,7 +69,7 @@
                                                 {{-- <a class="btn btn-primary btn-sm" href="#">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a> --}}
-                                                @can('edit-orser')
+                                                @can('edit-order')
                                                 <a class="btn btn-info btn-sm" href="{{ Url('admin/order/view-order/'.$data->id) }}">
                                                     <i class="fas fa-folder"></i>
                                                 </a>
